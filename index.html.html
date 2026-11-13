@@ -1,0 +1,333 @@
+html
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>翰林國小三年級英文單字大挑戰 - Here We Go 1</title>
+<style>
+  body {
+    font-family: "Microsoft JhengHei", "PingFang TC", sans-serif;
+    background-color: #f0f7ff;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #333;
+  }
+  .container {
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 85, 170, 0.15);
+    width: 100%;
+    max-width: 550px;
+    padding: 30px;
+    text-align: center;
+  }
+  h1 {
+    color: #0066cc;
+    font-size: 26px;
+    margin-bottom: 5px;
+  }
+  .subtitle {
+    color: #666;
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+  .controls {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #e6f2ff;
+    padding: 12px 15px;
+    border-radius: 12px;
+  }
+  select {
+    padding: 8px 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 2px solid #0066cc;
+    background: white;
+    font-weight: bold;
+    color: #0066cc;
+    cursor: pointer;
+  }
+  .score-board {
+    font-size: 18px;
+    font-weight: bold;
+    color: #d9534f;
+  }
+  .word-card {
+    background: #fff9e6;
+    border: 3px dashed #ffb84d;
+    border-radius: 16px;
+    padding: 30px 20px;
+    margin-bottom: 25px;
+    position: relative;
+  }
+  .english-word {
+    font-size: 46px;
+    font-weight: bold;
+    color: #222;
+    margin: 10px 0;
+    letter-spacing: 1px;
+  }
+  .speak-btn {
+    background: #ff9900;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 8px 18px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #cc7a00;
+    transition: transform 0.1s;
+  }
+  .speak-btn:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 #cc7a00;
+  }
+  .options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+  .option-btn {
+    background: #ffffff;
+    border: 3px solid #cce0ff;
+    border-radius: 14px;
+    padding: 18px 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #0055aa;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .option-btn:hover {
+    background: #eef5ff;
+    border-color: #0066cc;
+  }
+  .option-btn.correct {
+    background: #28a745;
+    border-color: #1e7e34;
+    color: white;
+  }
+  .option-btn.wrong {
+    background: #dc3545;
+    border-color: #bd2130;
+    color: white;
+  }
+  .feedback {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    height: 30px;
+  }
+  .combo-badge {
+    display: inline-block;
+    background: #ff4757;
+    color: white;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 14px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>🏫 翰林三上英文單字王</h1>
+  <div class="subtitle">Here We Go Book 1 單字聽讀挑戰</div>
+
+  <div class="controls">
+    <select id="unitSelect" onchange="resetGame()">
+      <option value="all">🌟 全部單元混合</option>
+      <option value="starter">Starter Unit (數字 1-5)</option>
+      <option value="u1">Unit 1 (姓名與問候)</option>
+      <option value="u2">Unit 2 (數字 6-10)</option>
+      <option value="u3">Unit 3 (文具用品)</option>
+      <option value="u4">Unit 4 (顏色)</option>
+      <option value="fest">Festivals (萬聖節)</option>
+    </select>
+    <div class="score-board">
+      分數: <span id="score">0</span>
+      <span id="comboBadge" class="combo-badge" style="display:none;">0 連勝!</span>
+    </div>
+  </div>
+
+  <div class="word-card">
+    <div id="unitTag" style="font-size: 13px; color: #b37700; font-weight: bold;">UNIT</div>
+    <div class="english-word" id="questionWord">Loading...</div>
+    <button class="speak-btn" onclick="speakCurrentWord()">🔊 聽發音</button>
+  </div>
+
+  <div class="options-grid" id="optionsContainer"></div>
+
+  <div class="feedback" id="feedbackText"></div>
+</div>
+
+<script>
+const vocabulary = [
+  // Starter Unit
+  { word: "one", meaning: "一 (1)", unit: "starter", unitName: "Starter Unit" },
+  { word: "two", meaning: "二 (2)", unit: "starter", unitName: "Starter Unit" },
+  { word: "three", meaning: "三 (3)", unit: "starter", unitName: "Starter Unit" },
+  { word: "four", meaning: "四 (4)", unit: "starter", unitName: "Starter Unit" },
+  { word: "five", meaning: "五 (5)", unit: "starter", unitName: "Starter Unit" },
+  // Unit 1
+  { word: "name", meaning: "名字", unit: "u1", unitName: "Unit 1" },
+  { word: "what", meaning: "什麼", unit: "u1", unitName: "Unit 1" },
+  { word: "your", meaning: "你的", unit: "u1", unitName: "Unit 1" },
+  { word: "my", meaning: "我的", unit: "u1", unitName: "Unit 1" },
+  // Unit 2
+  { word: "six", meaning: "六 (6)", unit: "u2", unitName: "Unit 2" },
+  { word: "seven", meaning: "七 (7)", unit: "u2", unitName: "Unit 2" },
+  { word: "eight", meaning: "八 (8)", unit: "u2", unitName: "Unit 2" },
+  { word: "nine", meaning: "九 (9)", unit: "u2", unitName: "Unit 2" },
+  { word: "ten", meaning: "十 (10)", unit: "u2", unitName: "Unit 2" },
+  // Unit 3
+  { word: "book", meaning: "書本", unit: "u3", unitName: "Unit 3" },
+  { word: "pen", meaning: "原子筆", unit: "u3", unitName: "Unit 3" },
+  { word: "pencil", meaning: "鉛筆", unit: "u3", unitName: "Unit 3" },
+  { word: "eraser", meaning: "橡皮擦", unit: "u3", unitName: "Unit 3" },
+  { word: "ruler", meaning: "尺", unit: "u3", unitName: "Unit 3" },
+  { word: "marker", meaning: "彩色筆 / 麥克筆", unit: "u3", unitName: "Unit 3" },
+  { word: "this", meaning: "這個", unit: "u3", unitName: "Unit 3" },
+  { word: "that", meaning: "那個", unit: "u3", unitName: "Unit 3" },
+  // Unit 4
+  { word: "color", meaning: "顏色", unit: "u4", unitName: "Unit 4" },
+  { word: "blue", meaning: "藍色", unit: "u4", unitName: "Unit 4" },
+  { word: "green", meaning: "綠色", unit: "u4", unitName: "Unit 4" },
+  { word: "red", meaning: "紅色", unit: "u4", unitName: "Unit 4" },
+  { word: "yellow", meaning: "黃色", unit: "u4", unitName: "Unit 4" },
+  { word: "black", meaning: "黑色", unit: "u4", unitName: "Unit 4" },
+  { word: "white", meaning: "白色", unit: "u4", unitName: "Unit 4" },
+  // Festivals
+  { word: "bat", meaning: "蝙蝠", unit: "fest", unitName: "Halloween" },
+  { word: "ghost", meaning: "鬼魂", unit: "fest", unitName: "Halloween" },
+  { word: "pumpkin", meaning: "南瓜", unit: "fest", unitName: "Halloween" },
+  { word: "spider", meaning: "蜘蛛", unit: "fest", unitName: "Halloween" },
+  { word: "witch", meaning: "女巫", unit: "fest", unitName: "Halloween" },
+  { word: "vampire", meaning: "吸血鬼", unit: "fest", unitName: "Halloween" }
+];
+
+let currentWordObj = null;
+let score = 0;
+let combo = 0;
+let isAnswering = false;
+
+function speakWord(text) {
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'en-US';
+    utterance.rate = 0.85; // 語速稍微放慢適合國小生
+    window.speechSynthesis.speak(utterance);
+  }
+}
+
+function speakCurrentWord() {
+  if (currentWordObj) {
+    speakWord(currentWordObj.word);
+  }
+}
+
+function getPool() {
+  const selectedUnit = document.getElementById("unitSelect").value;
+  if (selectedUnit === "all") return vocabulary;
+  return vocabulary.filter(item => item.unit === selectedUnit);
+}
+
+function nextQuestion() {
+  isAnswering = true;
+  document.getElementById("feedbackText").textContent = "";
+  const pool = getPool();
+  
+  // 隨機選一題
+  currentWordObj = pool[Math.floor(Math.random() * pool.length)];
+  
+  document.getElementById("unitTag").textContent = currentWordObj.unitName;
+  document.getElementById("questionWord").textContent = currentWordObj.word;
+  
+  // 產生 4 個選項 (1個正確 + 3個干擾項)
+  let options = [currentWordObj];
+  let distractors = vocabulary.filter(item => item.word !== currentWordObj.word);
+  distractors.sort(() => Math.random() - 0.5);
+  options = options.concat(distractors.slice(0, 3));
+  options.sort(() => Math.random() - 0.5);
+
+  const container = document.getElementById("optionsContainer");
+  container.innerHTML = "";
+
+  options.forEach(opt => {
+    const btn = document.createElement("button");
+    btn.className = "option-btn";
+    btn.textContent = opt.meaning;
+    btn.onclick = () => checkAnswer(btn, opt);
+    container.appendChild(btn);
+  });
+
+  // 自動唸出單字
+  setTimeout(() => speakCurrentWord(), 300);
+}
+
+function checkAnswer(selectedBtn, selectedOpt) {
+  if (!isAnswering) return;
+  isAnswering = false;
+
+  const buttons = document.querySelectorAll(".option-btn");
+  const feedback = document.getElementById("feedbackText");
+
+  if (selectedOpt.word === currentWordObj.word) {
+    selectedBtn.classList.add("correct");
+    combo++;
+    score += 10 + (combo > 1 ? combo * 2 : 0);
+    feedback.style.color = "#28a745";
+    feedback.textContent = "🎉 答對了！太棒了！";
+  } else {
+    selectedBtn.classList.add("wrong");
+    combo = 0;
+    feedback.style.color = "#dc3545";
+    feedback.textContent = `❌ 哎呀！正確答案是「${currentWordObj.meaning}」`;
+    
+    // 標示出正確答案
+    buttons.forEach(btn => {
+      if (btn.textContent === currentWordObj.meaning) {
+        btn.classList.add("correct");
+      }
+    });
+  }
+
+  updateScoreUI();
+  setTimeout(nextQuestion, 1500);
+}
+
+function updateScoreUI() {
+  document.getElementById("score").textContent = score;
+  const comboBadge = document.getElementById("comboBadge");
+  if (combo >= 2) {
+    comboBadge.style.display = "inline-block";
+    comboBadge.textContent = `${combo} 連勝!`;
+  } else {
+    comboBadge.style.display = "none";
+  }
+}
+
+function resetGame() {
+  score = 0;
+  combo = 0;
+  updateScoreUI();
+  nextQuestion();
+}
+
+// 啟動遊戲
+window.onload = nextQuestion;
+</script>
+
+</body>
+</html>
