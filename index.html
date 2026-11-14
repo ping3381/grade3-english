@@ -1,4 +1,3 @@
-html
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -6,214 +5,170 @@ html
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>翰林國小三年級英文單字大挑戰 - Here We Go 1</title>
 <style>
-  body {
-    font-family: "Microsoft JhengHei", "PingFang TC", sans-serif;
-    background-color: #f0f7ff;
-    margin: 0;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    color: #333;
-  }
-  .container {
-    background: #ffffff;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0, 85, 170, 0.15);
-    width: 100%;
-    max-width: 550px;
-    padding: 30px;
-    text-align: center;
-  }
-  h1 {
-    color: #0066cc;
-    font-size: 26px;
-    margin-bottom: 5px;
-  }
-  .subtitle {
-    color: #666;
-    font-size: 15px;
-    margin-bottom: 20px;
-  }
-  .controls {
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #e6f2ff;
-    padding: 12px 15px;
-    border-radius: 12px;
-  }
-  select {
-    padding: 8px 12px;
-    font-size: 16px;
-    border-radius: 8px;
-    border: 2px solid #0066cc;
-    background: white;
-    font-weight: bold;
-    color: #0066cc;
-    cursor: pointer;
-  }
-  .score-board {
-    font-size: 18px;
-    font-weight: bold;
-    color: #d9534f;
-  }
-  .word-card {
-    background: #fff9e6;
-    border: 3px dashed #ffb84d;
-    border-radius: 16px;
-    padding: 30px 20px;
-    margin-bottom: 25px;
-    position: relative;
-  }
-  .english-word {
-    font-size: 46px;
-    font-weight: bold;
-    color: #222;
-    margin: 10px 0;
-    letter-spacing: 1px;
-  }
-  .speak-btn {
-    background: #ff9900;
-    color: white;
-    border: none;
-    border-radius: 50px;
-    padding: 8px 18px;
-    font-size: 16px;
-    cursor: pointer;
-    box-shadow: 0 4px 0 #cc7a00;
-    transition: transform 0.1s;
-  }
-  .speak-btn:active {
-    transform: translateY(3px);
-    box-shadow: 0 1px 0 #cc7a00;
-  }
-  .options-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-  }
-  .option-btn {
-    background: #ffffff;
-    border: 3px solid #cce0ff;
-    border-radius: 14px;
-    padding: 18px 10px;
-    font-size: 20px;
-    font-weight: bold;
-    color: #0055aa;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .option-btn:hover {
-    background: #eef5ff;
-    border-color: #0066cc;
-  }
-  .option-btn.correct {
-    background: #28a745;
-    border-color: #1e7e34;
-    color: white;
-  }
-  .option-btn.wrong {
-    background: #dc3545;
-    border-color: #bd2130;
-    color: white;
-  }
-  .feedback {
-    margin-top: 20px;
-    font-size: 20px;
-    font-weight: bold;
-    height: 30px;
-  }
-  .combo-badge {
-    display: inline-block;
-    background: #ff4757;
-    color: white;
-    padding: 3px 10px;
-    border-radius: 20px;
-    font-size: 14px;
-    margin-left: 8px;
-    vertical-align: middle;
-  }
+  body { font-family: "Microsoft JhengHei", "PingFang TC", sans-serif; background-color: #f0f7ff; margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; color: #333; }
+  .container { background: #ffffff; border-radius: 20px; box-shadow: 0 10px 25px rgba(0, 85, 170, 0.15); width: 100%; max-width: 580px; padding: 28px; text-align: center; }
+  h1 { color: #0066cc; font-size: 26px; margin-bottom: 5px; }
+  .subtitle { color: #666; font-size: 15px; margin-bottom: 18px; }
+  .controls { margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center; background: #e6f2ff; padding: 12px 15px; border-radius: 12px; }
+  .select-group { display: flex; flex-wrap: wrap; gap: 8px; }
+  select { padding: 8px 10px; font-size: 15px; border-radius: 8px; border: 2px solid #0066cc; background: white; font-weight: bold; color: #0066cc; cursor: pointer; }
+  .score-board { font-size: 18px; font-weight: bold; color: #d9534f; }
+  .word-card { background: #fff9e6; border: 3px dashed #ffb84d; border-radius: 16px; padding: 28px 20px; margin-bottom: 22px; position: relative; }
+  .english-word { font-size: 44px; font-weight: bold; color: #222; margin: 12px 0 16px; letter-spacing: 0.5px; line-height: 1.25; }
+  .english-word.sentence-mode { font-size: 32px; }
+  .speak-btn { background: #ff9900; color: white; border: none; border-radius: 50px; padding: 8px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 0 #cc7a00; }
+  .speak-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #cc7a00; }
+  .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 480px) { .options-grid { grid-template-columns: 1fr; } }
+  .option-btn { background: #ffffff; border: 3px solid #cce0ff; border-radius: 14px; padding: 16px 12px; font-size: 19px; font-weight: bold; color: #0055aa; cursor: pointer; transition: all 0.2s; }
+  .option-btn:hover { background: #eef5ff; border-color: #0066cc; }
+  .option-btn.correct { background: #28a745; border-color: #1e7e34; color: white; }
+  .option-btn.wrong { background: #dc3545; border-color: #bd2130; color: white; }
+  .feedback { margin-top: 18px; font-size: 19px; font-weight: bold; min-height: 28px; }
+  .combo-badge { display: inline-block; background: #ff4757; color: white; padding: 3px 10px; border-radius: 20px; font-size: 14px; margin-left: 6px; vertical-align: middle; }
 </style>
 </head>
 <body>
-
 <div class="container">
   <h1>🏫 翰林三上英文單字王</h1>
-  <div class="subtitle">Here We Go Book 1 單字聽讀挑戰</div>
-
+  <div class="subtitle">Here We Go Book 1 單字與句子聽讀挑戰</div>
   <div class="controls">
-    <select id="unitSelect" onchange="resetGame()">
-      <option value="all">🌟 全部單元混合</option>
-      <option value="starter">Starter Unit (數字 1-5)</option>
-      <option value="u1">Unit 1 (姓名與問候)</option>
-      <option value="u2">Unit 2 (數字 6-10)</option>
-      <option value="u3">Unit 3 (文具用品)</option>
-      <option value="u4">Unit 4 (顏色)</option>
-      <option value="fest">Festivals (萬聖節)</option>
-    </select>
+    <div class="select-group">
+      <select id="unitSelect" onchange="resetGame()">
+        <option value="all">🌟 全部單元混合</option>
+        <option value="starter">Starter Unit (數字 1-5)</option>
+        <option value="u1">Unit 1 (姓名與問候)</option>
+        <option value="u2">Unit 2 (數字 6-10)</option>
+        <option value="u3">Unit 3 (文具用品)</option>
+        <option value="u4">Unit 4 (顏色)</option>
+        <option value="fest">Festivals (萬聖節)</option>
+      </select>
+      <select id="typeSelect" onchange="resetGame()">
+        <option value="all">📚 單字 + 句子</option>
+        <option value="word">🔤 只練單字</option>
+        <option value="sentence">💬 只練句子</option>
+      </select>
+    </div>
     <div class="score-board">
       分數: <span id="score">0</span>
       <span id="comboBadge" class="combo-badge" style="display:none;">0 連勝!</span>
     </div>
   </div>
-
   <div class="word-card">
     <div id="unitTag" style="font-size: 13px; color: #b37700; font-weight: bold;">UNIT</div>
     <div class="english-word" id="questionWord">Loading...</div>
     <button class="speak-btn" onclick="speakCurrentWord()">🔊 聽發音</button>
   </div>
-
   <div class="options-grid" id="optionsContainer"></div>
-
   <div class="feedback" id="feedbackText"></div>
 </div>
-
 <script>
 const vocabulary = [
-  // Starter Unit
-  { word: "one", meaning: "一 (1)", unit: "starter", unitName: "Starter Unit" },
-  { word: "two", meaning: "二 (2)", unit: "starter", unitName: "Starter Unit" },
-  { word: "three", meaning: "三 (3)", unit: "starter", unitName: "Starter Unit" },
-  { word: "four", meaning: "四 (4)", unit: "starter", unitName: "Starter Unit" },
-  { word: "five", meaning: "五 (5)", unit: "starter", unitName: "Starter Unit" },
-  // Unit 1
-  { word: "name", meaning: "名字", unit: "u1", unitName: "Unit 1" },
-  { word: "what", meaning: "什麼", unit: "u1", unitName: "Unit 1" },
-  { word: "your", meaning: "你的", unit: "u1", unitName: "Unit 1" },
-  { word: "my", meaning: "我的", unit: "u1", unitName: "Unit 1" },
-  // Unit 2
-  { word: "six", meaning: "六 (6)", unit: "u2", unitName: "Unit 2" },
-  { word: "seven", meaning: "七 (7)", unit: "u2", unitName: "Unit 2" },
-  { word: "eight", meaning: "八 (8)", unit: "u2", unitName: "Unit 2" },
-  { word: "nine", meaning: "九 (9)", unit: "u2", unitName: "Unit 2" },
-  { word: "ten", meaning: "十 (10)", unit: "u2", unitName: "Unit 2" },
-  // Unit 3
-  { word: "book", meaning: "書本", unit: "u3", unitName: "Unit 3" },
-  { word: "pen", meaning: "原子筆", unit: "u3", unitName: "Unit 3" },
-  { word: "pencil", meaning: "鉛筆", unit: "u3", unitName: "Unit 3" },
-  { word: "eraser", meaning: "橡皮擦", unit: "u3", unitName: "Unit 3" },
-  { word: "ruler", meaning: "尺", unit: "u3", unitName: "Unit 3" },
-  { word: "marker", meaning: "彩色筆 / 麥克筆", unit: "u3", unitName: "Unit 3" },
-  { word: "this", meaning: "這個", unit: "u3", unitName: "Unit 3" },
-  { word: "that", meaning: "那個", unit: "u3", unitName: "Unit 3" },
-  // Unit 4
-  { word: "color", meaning: "顏色", unit: "u4", unitName: "Unit 4" },
-  { word: "blue", meaning: "藍色", unit: "u4", unitName: "Unit 4" },
-  { word: "green", meaning: "綠色", unit: "u4", unitName: "Unit 4" },
-  { word: "red", meaning: "紅色", unit: "u4", unitName: "Unit 4" },
-  { word: "yellow", meaning: "黃色", unit: "u4", unitName: "Unit 4" },
-  { word: "black", meaning: "黑色", unit: "u4", unitName: "Unit 4" },
-  { word: "white", meaning: "白色", unit: "u4", unitName: "Unit 4" },
-  // Festivals
-  { word: "bat", meaning: "蝙蝠", unit: "fest", unitName: "Halloween" },
-  { word: "ghost", meaning: "鬼魂", unit: "fest", unitName: "Halloween" },
-  { word: "pumpkin", meaning: "南瓜", unit: "fest", unitName: "Halloween" },
-  { word: "spider", meaning: "蜘蛛", unit: "fest", unitName: "Halloween" },
-  { word: "witch", meaning: "女巫", unit: "fest", unitName: "Halloween" },
-  { word: "vampire", meaning: "吸血鬼", unit: "fest", unitName: "Halloween" }
+  { word: "one", meaning: "一 (1)", unit: "starter", unitName: "Starter Unit · 單字", type: "word" },
+  { word: "two", meaning: "二 (2)", unit: "starter", unitName: "Starter Unit · 單字", type: "word" },
+  { word: "three", meaning: "三 (3)", unit: "starter", unitName: "Starter Unit · 單字", type: "word" },
+  { word: "four", meaning: "四 (4)", unit: "starter", unitName: "Starter Unit · 單字", type: "word" },
+  { word: "five", meaning: "五 (5)", unit: "starter", unitName: "Starter Unit · 單字", type: "word" },
+  { word: "I", meaning: "我", unit: "u1", unitName: "Unit 1 · 單字", type: "word" },
+  { word: "am / is", meaning: "是", unit: "u1", unitName: "Unit 1 · 單字", type: "word" },
+  { word: "my", meaning: "我的", unit: "u1", unitName: "Unit 1 · 單字", type: "word" },
+  { word: "name", meaning: "名字", unit: "u1", unitName: "Unit 1 · 單字", type: "word" },
+  { word: "what", meaning: "什麼", unit: "u1", unitName: "Unit 1 · 單字", type: "word" },
+  { word: "your", meaning: "你的", unit: "u1", unitName: "Unit 1 · 單字", type: "word" },
+  { word: "fish", meaning: "魚", unit: "u1", unitName: "Unit 1 · 發音單字", type: "word" },
+  { word: "fan", meaning: "扇子", unit: "u1", unitName: "Unit 1 · 發音單字", type: "word" },
+  { word: "goat", meaning: "山羊", unit: "u1", unitName: "Unit 1 · 發音單字", type: "word" },
+  { word: "girl", meaning: "女孩", unit: "u1", unitName: "Unit 1 · 發音單字", type: "word" },
+  { word: "hand", meaning: "手", unit: "u1", unitName: "Unit 1 · 發音單字", type: "word" },
+  { word: "hat", meaning: "帽子", unit: "u1", unitName: "Unit 1 · 發音單字", type: "word" },
+  { word: "ink", meaning: "墨水", unit: "u1", unitName: "Unit 1 · 發音單字", type: "word" },
+  { word: "insect", meaning: "昆蟲", unit: "u1", unitName: "Unit 1 · 發音單字", type: "word" },
+  { word: "jet", meaning: "噴射機", unit: "u1", unitName: "Unit 1 · 發音單字", type: "word" },
+  { word: "jam", meaning: "果醬", unit: "u1", unitName: "Unit 1 · 發音單字", type: "word" },
+  { word: "How are you?", meaning: "你好嗎？", unit: "u1", unitName: "Unit 1 · 句子", type: "sentence" },
+  { word: "I'm fine.", meaning: "我很好。", unit: "u1", unitName: "Unit 1 · 句子", type: "sentence" },
+  { word: "What's your name?", meaning: "你叫什麼名字？", unit: "u1", unitName: "Unit 1 · 句子", type: "sentence" },
+  { word: "My name is Abu.", meaning: "我的名字是 Abu。", unit: "u1", unitName: "Unit 1 · 句子", type: "sentence" },
+  { word: "I'm Mia.", meaning: "我是 Mia。", unit: "u1", unitName: "Unit 1 · 句子", type: "sentence" },
+  { word: "six", meaning: "六 (6)", unit: "u2", unitName: "Unit 2 · 單字", type: "word" },
+  { word: "seven", meaning: "七 (7)", unit: "u2", unitName: "Unit 2 · 單字", type: "word" },
+  { word: "eight", meaning: "八 (8)", unit: "u2", unitName: "Unit 2 · 單字", type: "word" },
+  { word: "nine", meaning: "九 (9)", unit: "u2", unitName: "Unit 2 · 單字", type: "word" },
+  { word: "ten", meaning: "十 (10)", unit: "u2", unitName: "Unit 2 · 單字", type: "word" },
+  { word: "how old", meaning: "幾歲", unit: "u2", unitName: "Unit 2 · 單字", type: "word" },
+  { word: "you", meaning: "你", unit: "u2", unitName: "Unit 2 · 單字", type: "word" },
+  { word: "years", meaning: "年；歲", unit: "u2", unitName: "Unit 2 · 單字", type: "word" },
+  { word: "key", meaning: "鑰匙", unit: "u2", unitName: "Unit 2 · 發音單字", type: "word" },
+  { word: "kite", meaning: "風箏", unit: "u2", unitName: "Unit 2 · 發音單字", type: "word" },
+  { word: "lion", meaning: "獅子", unit: "u2", unitName: "Unit 2 · 發音單字", type: "word" },
+  { word: "leg", meaning: "腿", unit: "u2", unitName: "Unit 2 · 發音單字", type: "word" },
+  { word: "monkey", meaning: "猴子", unit: "u2", unitName: "Unit 2 · 發音單字", type: "word" },
+  { word: "milk", meaning: "牛奶", unit: "u2", unitName: "Unit 2 · 發音單字", type: "word" },
+  { word: "nose", meaning: "鼻子", unit: "u2", unitName: "Unit 2 · 發音單字", type: "word" },
+  { word: "neck", meaning: "脖子", unit: "u2", unitName: "Unit 2 · 發音單字", type: "word" },
+  { word: "ox", meaning: "公牛", unit: "u2", unitName: "Unit 2 · 發音單字", type: "word" },
+  { word: "otter", meaning: "水獺", unit: "u2", unitName: "Unit 2 · 發音單字", type: "word" },
+  { word: "Thank you.", meaning: "謝謝你。", unit: "u2", unitName: "Unit 2 · 句子", type: "sentence" },
+  { word: "You're welcome.", meaning: "不客氣。", unit: "u2", unitName: "Unit 2 · 句子", type: "sentence" },
+  { word: "How old are you?", meaning: "你幾歲？", unit: "u2", unitName: "Unit 2 · 句子", type: "sentence" },
+  { word: "I'm ten.", meaning: "我十歲。", unit: "u2", unitName: "Unit 2 · 句子", type: "sentence" },
+  { word: "I'm ten years old.", meaning: "我十歲了。", unit: "u2", unitName: "Unit 2 · 句子", type: "sentence" },
+
+  { word: "book", meaning: "書本", unit: "u3", unitName: "Unit 3 · 單字", type: "word" },
+  { word: "pen", meaning: "原子筆", unit: "u3", unitName: "Unit 3 · 單字", type: "word" },
+  { word: "pencil", meaning: "鉛筆", unit: "u3", unitName: "Unit 3 · 單字", type: "word" },
+  { word: "eraser", meaning: "橡皮擦", unit: "u3", unitName: "Unit 3 · 單字", type: "word" },
+  { word: "ruler", meaning: "尺", unit: "u3", unitName: "Unit 3 · 單字", type: "word" },
+  { word: "marker", meaning: "彩色筆 / 麥克筆", unit: "u3", unitName: "Unit 3 · 單字", type: "word" },
+  { word: "this", meaning: "這個", unit: "u3", unitName: "Unit 3 · 單字", type: "word" },
+  { word: "that", meaning: "那個", unit: "u3", unitName: "Unit 3 · 單字", type: "word" },
+  { word: "it", meaning: "它；牠", unit: "u3", unitName: "Unit 3 · 單字", type: "word" },
+  { word: "a / an", meaning: "一個（隻……等）", unit: "u3", unitName: "Unit 3 · 單字", type: "word" },
+  { word: "pig", meaning: "豬", unit: "u3", unitName: "Unit 3 · 發音單字", type: "word" },
+  { word: "pink", meaning: "粉紅色（的）", unit: "u3", unitName: "Unit 3 · 發音單字", type: "word" },
+  { word: "queen", meaning: "皇后", unit: "u3", unitName: "Unit 3 · 發音單字", type: "word" },
+  { word: "quiz", meaning: "小測驗", unit: "u3", unitName: "Unit 3 · 發音單字", type: "word" },
+  { word: "red", meaning: "紅色（的）", unit: "u3", unitName: "Unit 3 · 發音單字", type: "word" },
+  { word: "rabbit", meaning: "兔子", unit: "u3", unitName: "Unit 3 · 發音單字", type: "word" },
+  { word: "snake", meaning: "蛇", unit: "u3", unitName: "Unit 3 · 發音單字", type: "word" },
+  { word: "sun", meaning: "太陽", unit: "u3", unitName: "Unit 3 · 發音單字", type: "word" },
+  { word: "turtle", meaning: "烏龜", unit: "u3", unitName: "Unit 3 · 發音單字", type: "word" },
+  { word: "tiger", meaning: "老虎", unit: "u3", unitName: "Unit 3 · 發音單字", type: "word" },
+  { word: "Good job!", meaning: "做得好！", unit: "u3", unitName: "Unit 3 · 句子", type: "sentence" },
+  { word: "Thanks!", meaning: "謝謝！", unit: "u3", unitName: "Unit 3 · 句子", type: "sentence" },
+  { word: "Cool!", meaning: "酷！", unit: "u3", unitName: "Unit 3 · 句子", type: "sentence" },
+  { word: "What's that?", meaning: "那是什麼？", unit: "u3", unitName: "Unit 3 · 句子", type: "sentence" },
+  { word: "It's a book.", meaning: "它是一本書。", unit: "u3", unitName: "Unit 3 · 句子", type: "sentence" },
+  { word: "What's this?", meaning: "這是什麼？", unit: "u3", unitName: "Unit 3 · 句子", type: "sentence" },
+  { word: "It's an eraser.", meaning: "它是一塊橡皮擦。", unit: "u3", unitName: "Unit 3 · 句子", type: "sentence" },
+  { word: "color", meaning: "顏色", unit: "u4", unitName: "Unit 4 · 單字", type: "word" },
+  { word: "blue", meaning: "藍色（的）", unit: "u4", unitName: "Unit 4 · 單字", type: "word" },
+  { word: "green", meaning: "綠色（的）", unit: "u4", unitName: "Unit 4 · 單字", type: "word" },
+  { word: "yellow", meaning: "黃色（的）", unit: "u4", unitName: "Unit 4 · 單字", type: "word" },
+  { word: "black", meaning: "黑色（的）", unit: "u4", unitName: "Unit 4 · 單字", type: "word" },
+  { word: "white", meaning: "白色（的）", unit: "u4", unitName: "Unit 4 · 單字", type: "word" },
+  { word: "up", meaning: "向上", unit: "u4", unitName: "Unit 4 · 發音單字", type: "word" },
+  { word: "umbrella", meaning: "雨傘", unit: "u4", unitName: "Unit 4 · 發音單字", type: "word" },
+  { word: "van", meaning: "廂型車", unit: "u4", unitName: "Unit 4 · 發音單字", type: "word" },
+  { word: "vest", meaning: "背心", unit: "u4", unitName: "Unit 4 · 發音單字", type: "word" },
+  { word: "watch", meaning: "手錶", unit: "u4", unitName: "Unit 4 · 發音單字", type: "word" },
+  { word: "window", meaning: "窗戶", unit: "u4", unitName: "Unit 4 · 發音單字", type: "word" },
+  { word: "fox", meaning: "狐狸", unit: "u4", unitName: "Unit 4 · 發音單字", type: "word" },
+  { word: "box", meaning: "箱子", unit: "u4", unitName: "Unit 4 · 發音單字", type: "word" },
+  { word: "yo-yo", meaning: "溜溜球", unit: "u4", unitName: "Unit 4 · 發音單字", type: "word" },
+  { word: "yogurt", meaning: "優格", unit: "u4", unitName: "Unit 4 · 發音單字", type: "word" },
+  { word: "zoo", meaning: "動物園", unit: "u4", unitName: "Unit 4 · 發音單字", type: "word" },
+  { word: "zebra", meaning: "斑馬", unit: "u4", unitName: "Unit 4 · 發音單字", type: "word" },
+  { word: "Good morning.", meaning: "早安。", unit: "u4", unitName: "Unit 4 · 句子", type: "sentence" },
+  { word: "Good afternoon.", meaning: "午安。", unit: "u4", unitName: "Unit 4 · 句子", type: "sentence" },
+  { word: "What color is it?", meaning: "它是什麼顏色？", unit: "u4", unitName: "Unit 4 · 句子", type: "sentence" },
+  { word: "It's blue.", meaning: "它是藍色的。", unit: "u4", unitName: "Unit 4 · 句子", type: "sentence" },
+  { word: "bat", meaning: "蝙蝠", unit: "fest", unitName: "Halloween · 單字", type: "word" },
+  { word: "ghost", meaning: "鬼魂", unit: "fest", unitName: "Halloween · 單字", type: "word" },
+  { word: "pumpkin", meaning: "南瓜", unit: "fest", unitName: "Halloween · 單字", type: "word" },
+  { word: "spider", meaning: "蜘蛛", unit: "fest", unitName: "Halloween · 單字", type: "word" },
+  { word: "witch", meaning: "女巫", unit: "fest", unitName: "Halloween · 單字", type: "word" },
+  { word: "vampire", meaning: "吸血鬼", unit: "fest", unitName: "Halloween · 單字", type: "word" }
 ];
 
 let currentWordObj = null;
@@ -224,46 +179,45 @@ let isAnswering = false;
 function speakWord(text) {
   if ('speechSynthesis' in window) {
     window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
+    const utterance = new SpeechSynthesisUtterance(text.replace("/", " or "));
     utterance.lang = 'en-US';
-    utterance.rate = 0.85; // 語速稍微放慢適合國小生
+    utterance.rate = 0.85;
     window.speechSynthesis.speak(utterance);
   }
 }
 
 function speakCurrentWord() {
-  if (currentWordObj) {
-    speakWord(currentWordObj.word);
-  }
+  if (currentWordObj) speakWord(currentWordObj.word);
 }
 
 function getPool() {
-  const selectedUnit = document.getElementById("unitSelect").value;
-  if (selectedUnit === "all") return vocabulary;
-  return vocabulary.filter(item => item.unit === selectedUnit);
+  const u = document.getElementById("unitSelect").value;
+  const t = document.getElementById("typeSelect").value;
+  return vocabulary.filter(i => (u === "all" || i.unit === u) && (t === "all" || i.type === t));
 }
 
 function nextQuestion() {
   isAnswering = true;
   document.getElementById("feedbackText").textContent = "";
   const pool = getPool();
-  
-  // 隨機選一題
+  if (pool.length === 0) {
+    document.getElementById("unitTag").textContent = "提示";
+    document.getElementById("questionWord").textContent = "此分類暫無題目";
+    document.getElementById("optionsContainer").innerHTML = "";
+    return;
+  }
   currentWordObj = pool[Math.floor(Math.random() * pool.length)];
-  
   document.getElementById("unitTag").textContent = currentWordObj.unitName;
-  document.getElementById("questionWord").textContent = currentWordObj.word;
-  
-  // 產生 4 個選項 (1個正確 + 3個干擾項)
-  let options = [currentWordObj];
-  let distractors = vocabulary.filter(item => item.word !== currentWordObj.word);
+  const qEl = document.getElementById("questionWord");
+  qEl.textContent = currentWordObj.word;
+  qEl.classList.toggle("sentence-mode", currentWordObj.type === "sentence");
+
+  let distractors = vocabulary.filter(i => i.type === currentWordObj.type && i.meaning !== currentWordObj.meaning);
   distractors.sort(() => Math.random() - 0.5);
-  options = options.concat(distractors.slice(0, 3));
-  options.sort(() => Math.random() - 0.5);
+  let options = [currentWordObj, ...distractors.slice(0, 3)].sort(() => Math.random() - 0.5);
 
   const container = document.getElementById("optionsContainer");
   container.innerHTML = "";
-
   options.forEach(opt => {
     const btn = document.createElement("button");
     btn.className = "option-btn";
@@ -271,63 +225,43 @@ function nextQuestion() {
     btn.onclick = () => checkAnswer(btn, opt);
     container.appendChild(btn);
   });
-
-  // 自動唸出單字
-  setTimeout(() => speakCurrentWord(), 300);
+  speakCurrentWord();
 }
 
 function checkAnswer(selectedBtn, selectedOpt) {
   if (!isAnswering) return;
   isAnswering = false;
-
-  const buttons = document.querySelectorAll(".option-btn");
+  const allBtns = document.querySelectorAll(".option-btn");
   const feedback = document.getElementById("feedbackText");
-
-  if (selectedOpt.word === currentWordObj.word) {
+  if (selectedOpt.meaning === currentWordObj.meaning) {
     selectedBtn.classList.add("correct");
-    combo++;
-    score += 10 + (combo > 1 ? combo * 2 : 0);
+    score += 10;
+    combo += 1;
     feedback.style.color = "#28a745";
-    feedback.textContent = "🎉 答對了！太棒了！";
+    feedback.textContent = "⭕ 答對了！太棒了！";
   } else {
     selectedBtn.classList.add("wrong");
     combo = 0;
     feedback.style.color = "#dc3545";
-    feedback.textContent = `❌ 哎呀！正確答案是「${currentWordObj.meaning}」`;
-    
-    // 標示出正確答案
-    buttons.forEach(btn => {
-      if (btn.textContent === currentWordObj.meaning) {
-        btn.classList.add("correct");
-      }
-    });
+    feedback.textContent = "❌ 正確答案是：" + currentWordObj.meaning;
+    allBtns.forEach(btn => { if (btn.textContent === currentWordObj.meaning) btn.classList.add("correct"); });
   }
-
-  updateScoreUI();
-  setTimeout(nextQuestion, 1500);
-}
-
-function updateScoreUI() {
   document.getElementById("score").textContent = score;
-  const comboBadge = document.getElementById("comboBadge");
-  if (combo >= 2) {
-    comboBadge.style.display = "inline-block";
-    comboBadge.textContent = `${combo} 連勝!`;
-  } else {
-    comboBadge.style.display = "none";
-  }
+  const badge = document.getElementById("comboBadge");
+  badge.style.display = combo >= 2 ? "inline-block" : "none";
+  badge.textContent = combo + " 連勝!";
+  setTimeout(nextQuestion, 1400);
 }
 
 function resetGame() {
   score = 0;
   combo = 0;
-  updateScoreUI();
+  document.getElementById("score").textContent = score;
+  document.getElementById("comboBadge").style.display = "none";
   nextQuestion();
 }
 
-// 啟動遊戲
-window.onload = nextQuestion;
+nextQuestion();
 </script>
-
 </body>
 </html>
